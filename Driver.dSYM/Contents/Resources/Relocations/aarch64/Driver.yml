@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/ayaanzaheer/Las Positas/Year 2/CS 20/Week 4/week-4-mon-lab-akzaheer/Driver'
+relocations:     []
+...

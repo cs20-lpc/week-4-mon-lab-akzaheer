@@ -57,6 +57,14 @@ void LinkedList<T>::clear() {
 template <typename T>
 void LinkedList<T>::copy(const LinkedList<T>& copyObj) {
     // TODO
+    head = nullptr;      // start with empty list and then alkso make length 0
+    this->length =0;
+    Node* curr = copyObj.head;     // make pointer that will walk through the list as copying is done
+
+    while(curr != nullptr){
+        append(curr->value);            // use the append func to create a new node 
+        curr = curr-> next;                     // move over to next node and then this stuff happens over and over till done
+    }
 }
 
 template <typename T>
@@ -82,6 +90,24 @@ int LinkedList<T>::getLength() const {
 template <typename T>
 void LinkedList<T>::insert(int position, const T& elem) {
     // TODO
+    if(position < 0 || position > this->length){    // checking if valid input and throwing if not
+        throw string("Error: out of bounds");
+    }
+
+    Node* n = new Node(elem);       // make new node with value 
+    if(position == 0){
+        n->next = head;     // if insert if at the front then make new node point to the old head and head becomes the new node
+        head = n;       
+    }
+    else{
+        Node* curr = head;      // make node for curr
+        for(int i = 0; i < position - 1; i++){      // moves it right before where we want to insert
+            curr = curr->next;
+        }
+        n->next = curr->next;       // new node points to the next node         // basiacallt inserting it
+        curr->next = n;         // previous one points to new
+    }
+    this->length++;
 }
 
 template <typename T>
@@ -92,7 +118,30 @@ bool LinkedList<T>::isEmpty() const {
 template <typename T>
 void LinkedList<T>::remove(int position) {
     // TODO
+        if(position < 0 || position >= this->length){    // checking if valid input and throwing if not
+        throw string("Error: out of bounds");
+    }
+
+                    // if remove first node at 0
+    if(position == 0){
+        Node* temp = head;      // save old head
+        head = head->next;      // move head forward
+        delete temp;        // delete old one
+    }
+    else{
+        Node* curr = head;      // make node for curr
+        for(int i = 0; i < position - 1; i++){      // moves it right before where we want to insert
+            curr = curr->next;
+        }
+        
+        Node* temp = curr->next;    // make it the node to delete
+        curr->next = temp->next;        // skip dedleted one
+
+        delete temp;        // detlte old one
+    }
+    this->length--;
 }
+
 
 template <typename T>
 void LinkedList<T>::replace(int position, const T& elem) {
